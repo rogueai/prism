@@ -1,0 +1,36 @@
+name: CI
+on: [push]
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set Node.js 16.x
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+          cache: 'yarn'
+
+      - name: Install Dependencies
+        uses: borales/actions-yarn@v4
+        with:
+          cmd: yarn --frozen-lockfile
+
+      - name: Run build
+        uses: borales/actions-yarn@v4
+        with:
+          cmd: yarn build
+          
+      - name: Create CLI binary
+        uses: borales/actions-yarn@v4
+        with:
+          cmd: npx pkg --out-path ./cli-binaries ./packages/cli/
+          
+      - name: Archive artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: cli-binaries
+          path: ./cli-binaries
