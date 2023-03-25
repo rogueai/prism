@@ -32,6 +32,24 @@ const sharedOptions: Dictionary<Options> = {
     default: process.env.NODE_ENV === 'production',
   },
 
+  'validate-request': {
+    description: 'Validate incoming HTTP requests.',
+    boolean: true,
+    default: true,
+  },
+
+  'validate-response': {
+    description: 'Validate produced HTTP responses.',
+    boolean: true,
+    default: true,
+  },
+
+  'check-security': {
+    description: 'Check security constraints violations.',
+    boolean: true,
+    default: true,
+  },
+
   errors: {
     description: 'Specifies whether request/response violations marked as errors will produce an error response',
     required: true,
@@ -46,7 +64,7 @@ const sharedOptions: Dictionary<Options> = {
     demandOption: true,
     // log level choices: "silent" | "fatal" | "error" | "warn" | "info" | "debug" | "trace"
     // custom levels like "success" and "start" are set to the same severity value as "info"
-    choices: Object.keys(pino.levels.values).concat('silent')
+    choices: Object.keys(pino.levels.values).concat('silent'),
   },
 };
 

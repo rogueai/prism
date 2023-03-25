@@ -30,11 +30,14 @@ const mockCommand: CommandModule = {
       cors,
       document,
       errors,
-      verboseLevel
+      validateRequest,
+      validateResponse,
+      checkSecurity,
+      verboseLevel,
     } = (parsedArgs as unknown) as CreateMockServerOptions;
 
     const createPrism = multiprocess ? createMultiProcessPrism : createSingleProcessPrism;
-    const options = { cors, dynamic, port, host, document, multiprocess, errors, verboseLevel };
+    const options = { cors, dynamic, port, host, document, multiprocess, errors, validateRequest, validateResponse, checkSecurity, verboseLevel };
 
     return runPrismAndSetupWatcher(createPrism, options);
   },

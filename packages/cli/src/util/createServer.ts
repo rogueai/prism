@@ -73,11 +73,13 @@ async function createPrismServerWithLogger(options: CreateBaseServerOptions, log
     throw new Error('No operations found in the current file.');
   }
 
-  const validateRequest = isProxyServerOptions(options) ? options.validateRequest : true;
+  const validateRequest = options.validateRequest;
+  const validateResponse = options.validateResponse;
+  const checkSecurity = options.checkSecurity;
   const shared: Omit<IHttpConfig, 'mock'> = {
     validateRequest,
-    validateResponse: true,
-    checkSecurity: true,
+    validateResponse,
+    checkSecurity,
     errors: false,
     upstreamProxy: undefined,
   };
@@ -143,6 +145,9 @@ type CreateBaseServerOptions = {
   port: number;
   document: string;
   multiprocess: boolean;
+  validateRequest: boolean;
+  validateResponse: boolean;
+  checkSecurity: boolean;
   errors: boolean;
   verboseLevel: string;
 };
@@ -150,7 +155,6 @@ type CreateBaseServerOptions = {
 export interface CreateProxyServerOptions extends CreateBaseServerOptions {
   dynamic: false;
   upstream: URL;
-  validateRequest: boolean;
   upstreamProxy: string | undefined;
 }
 
